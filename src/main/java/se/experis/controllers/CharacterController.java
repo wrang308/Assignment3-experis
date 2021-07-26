@@ -45,7 +45,7 @@ public class CharacterController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Character> updateCharacter(@PathVariable Long id, @RequestBody Character author){
+    public ResponseEntity<Character> updateCharacter(@PathVariable int id, @RequestBody Character author){
         Character returnCharacter = new Character();
         HttpStatus status;
         /*
@@ -53,7 +53,7 @@ public class CharacterController {
          This is to ensure some level of security, making sure someone
          hasn't done some malicious stuff to our body.
         */
-        if(!id.equals(author.getId())){
+        if(id != author.getId()){
             status = HttpStatus.BAD_REQUEST;
             return new ResponseEntity<>(returnCharacter,status);
         }
