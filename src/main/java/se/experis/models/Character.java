@@ -25,14 +25,14 @@ public class Character {
 
     @ManyToMany
     @JoinTable(
-            name = "book_library",
-            joinColumns = {@JoinColumn(name = "library_id")},
-            inverseJoinColumns = {@JoinColumn(name = "book_id")}
+            name = "character_movie",
+            joinColumns = {@JoinColumn(name = "character_id")},
+            inverseJoinColumns = {@JoinColumn(name = "movie_id")}
     )
     public List<Movie> movies;
 
-    @JsonGetter("books")
-    public List<String> books() {
+    @JsonGetter("movies")
+    public List<String> movies() {
         return movies.stream()
                 .map(book -> {
                     return "/api/v1/books/" + movies.getId();
