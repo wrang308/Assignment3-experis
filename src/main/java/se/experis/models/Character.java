@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 public class Character {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private int characterId;
 
     @Column(name = "full_name")
     private String fullName;
