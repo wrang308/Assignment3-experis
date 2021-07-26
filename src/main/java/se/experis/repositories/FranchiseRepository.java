@@ -1,4 +1,9 @@
 package se.experis.repositories;
 
-public class FranchiseRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+import se.experis.models.Franchise;
+
+public interface FranchiseRepository extends JpaRepository<Franchise, Integer> {
+
+
 }
