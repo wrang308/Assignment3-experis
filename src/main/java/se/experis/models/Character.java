@@ -23,20 +23,18 @@ public class Character {
     private String pictureURL;
 
 
-    @ManyToMany
-    @JoinTable(
-            name = "character_movie",
-            joinColumns = {@JoinColumn(name = "character_id")},
-            inverseJoinColumns = {@JoinColumn(name = "movie_id")}
-    )
+    @ManyToMany(mappedBy = "characters")
     public List<Movie> movies;
 
     @JsonGetter("movies")
-    public List<String> movies() {
-        return movies.stream()
-                .map(movie -> {
-                    return "/api/v1/books/" + movie.getId();
-                }).collect(Collectors.toList());
+    public List<String> moviesGetter() {
+        if(movies != null){
+            return movies.stream()
+                    .map(movie -> {
+                        return "/api/v1/movies/" + movie.getId();
+                    }).collect(Collectors.toList());
+        }
+        return null;
     }
 
 

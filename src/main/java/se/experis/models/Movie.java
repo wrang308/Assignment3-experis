@@ -38,18 +38,20 @@ public class Movie {
     }
 
     // Book entity
-    @ManyToMany(mappedBy = "characters")
+    @ManyToMany
+    @JoinTable(
+            name = "movie_character",
+            joinColumns = {@JoinColumn(name = "character_id")},
+            inverseJoinColumns = {@JoinColumn(name = "movie_id")}
+    )
     public List<Character> characters;
 
     @JsonGetter("characters")
-    public List<String> librariesGetter() {
-        if(characters != null){
-            return characters.stream()
-                    .map(character -> {
-                        return "/api/v1/libraries/" + character.getId();
-                    }).collect(Collectors.toList());
-        }
-        return null;
+    public List<String> characters() {
+        return characters.stream()
+                .map(character -> {
+                    return "/api/v1/characters/" + character.getId();
+                }).collect(Collectors.toList());
     }
 
 
