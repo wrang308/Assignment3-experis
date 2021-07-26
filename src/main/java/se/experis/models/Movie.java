@@ -11,12 +11,18 @@ public class Movie {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "movie_title")
     private String movieTitle;
+    @Column(name = "genre")
     private String genre;
+    @Column(name = "postal_code")
     private String postalCode;
+    @Column(name = "director")
     private String director;
-    private String picture;
-    private String trailer;
+    @Column(name = "picture")
+    private String pictureURL;
+    @Column(name = "trailer")
+    private String trailerURL;
 
     @ManyToOne
     @JoinColumn(name = "franchise")
@@ -39,8 +45,8 @@ public class Movie {
     public List<String> librariesGetter() {
         if(characters != null){
             return characters.stream()
-                    .map(library -> {
-                        return "/api/v1/libraries/" + characters.getId();
+                    .map(character -> {
+                        return "/api/v1/libraries/" + character.getId();
                     }).collect(Collectors.toList());
         }
         return null;
@@ -87,20 +93,20 @@ public class Movie {
         this.director = director;
     }
 
-    public String getPicture() {
-        return picture;
+    public String getPictureURL() {
+        return pictureURL;
     }
 
-    public void setPicture(String picture) {
-        this.picture = picture;
+    public void setPictureURL(String picture) {
+        this.pictureURL = picture;
     }
 
-    public String getTrailer() {
-        return trailer;
+    public String getTrailerURL() {
+        return trailerURL;
     }
 
-    public void setTrailer(String trailer) {
-        this.trailer = trailer;
+    public void setTrailerURL(String trailer) {
+        this.trailerURL = trailer;
     }
 
 

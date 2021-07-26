@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 public class Character {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int characterId;
+    private Long characterId;
 
     @Column(name = "full_name")
     private String fullName;
@@ -34,18 +34,18 @@ public class Character {
     @JsonGetter("movies")
     public List<String> movies() {
         return movies.stream()
-                .map(book -> {
-                    return "/api/v1/books/" + movies.getId();
+                .map(movie -> {
+                    return "/api/v1/books/" + movie.getId();
                 }).collect(Collectors.toList());
     }
 
 
-    public int getId() {
-        return id;
+    public Long getId() {
+        return characterId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setId(Long id) {
+        this.characterId = id;
     }
 
     public String getFullName() {

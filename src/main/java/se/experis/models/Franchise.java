@@ -13,7 +13,25 @@ public class Franchise {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "name")
     private String name;
+    @Column(name = "description")
+    private String description;
+
+    @OneToMany
+    @JoinColumn(name = "id")
+    List<Movie> movies;
+
+    @JsonGetter("movies")
+    public List<String> movies() {
+        if(movies != null) {
+            return movies.stream()
+                    .map(movie -> {
+                        return "/api/v1/books/" + movie.getId();
+                    }).collect(Collectors.toList());
+        }
+        return null;
+    }
 
     public Long getId() {
         return id;
@@ -37,23 +55,6 @@ public class Franchise {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    private String description;
-
-    @OneToMany
-    @JoinColumn(name = "id")
-    List<Movie> movies;
-
-    @JsonGetter("movies")
-    public List<String> movies() {
-        if(movies != null) {
-            return movies.stream()
-                    .map(movie -> {
-                        return "/api/v1/books/" + movie.getId();
-                    }).collect(Collectors.toList());
-        }
-        return null;
     }
 
 }
