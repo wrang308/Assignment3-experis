@@ -18,16 +18,16 @@ public class CharacterController {
 
     @GetMapping()
     public ResponseEntity<List<Character>> getAllCharacters(){
-        List<Character> authors = characterRepository.findAll();
+        List<Character> characters = characterRepository.findAll();
         HttpStatus status = HttpStatus.OK;
-        return new ResponseEntity<>(authors,status);
+        return new ResponseEntity<>(characters,status);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Character> getCharacter(@PathVariable int id){
         Character returnCharacter = new Character();
         HttpStatus status;
-        // We first check if the author exists, this saves some computing time.
+        // We first check if the character exists, this saves some computing time.
         if(characterRepository.existsById(id)){
             status = HttpStatus.OK;
             returnCharacter = characterRepository.findById(id).get();
@@ -39,13 +39,13 @@ public class CharacterController {
 
     @PostMapping
     public ResponseEntity<Character> addCharacter(@RequestBody Character character){
-        Character returnAuthor = characterRepository.save(character);
+        Character returnCharacter = characterRepository.save(character);
         HttpStatus status = HttpStatus.CREATED;
-        return new ResponseEntity<>(returnAuthor, status);
+        return new ResponseEntity<>(returnCharacter, status);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Character> updateCharacter(@PathVariable int id, @RequestBody Character author){
+    public ResponseEntity<Character> updateCharacter(@PathVariable int id, @RequestBody Character character){
         Character returnCharacter = new Character();
         HttpStatus status;
         /*
@@ -53,11 +53,11 @@ public class CharacterController {
          This is to ensure some level of security, making sure someone
          hasn't done some malicious stuff to our body.
         */
-        if(id != author.getId()){
+        if(id != character.getId()){
             status = HttpStatus.BAD_REQUEST;
             return new ResponseEntity<>(returnCharacter,status);
         }
-        returnCharacter = characterRepository.save(author);
+        returnCharacter = characterRepository.save(character);
         status = HttpStatus.NO_CONTENT;
         return new ResponseEntity<>(returnCharacter, status);
     }
