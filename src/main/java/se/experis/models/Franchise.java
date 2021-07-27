@@ -19,7 +19,7 @@ public class Franchise {
     private String description;
 
     @OneToMany
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "movie_id")
     List<Movie> movies;
 
     @JsonGetter("movies")
@@ -27,7 +27,7 @@ public class Franchise {
         if(movies != null) {
             return movies.stream()
                     .map(movie -> {
-                        return "/api/v1/books/" + movie.getId();
+                        return "/api/v1/movies/" + movie.getId();
                     }).collect(Collectors.toList());
         }
         return null;

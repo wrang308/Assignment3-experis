@@ -25,10 +25,10 @@ public class Movie {
     private String trailerURL;
 
     @ManyToOne
-    @JoinColumn(name = "franchise")
+    @JoinColumn(name = "movie_id")
     public Franchise franchise;
 
-    @JsonGetter("franchise")
+    @JsonGetter("franchises")
     public String franchise() {
         if(franchise != null){
             return "/api/v1/franchise/" + franchise.getId();
