@@ -39,10 +39,10 @@ public class FranchiseController {
     }
 
     @PostMapping
-    public ResponseEntity<Franchise> addCharacter(@RequestBody Franchise franchise){
-        Franchise returnAuthor = franchiseRepository.save(franchise);
+    public ResponseEntity<Franchise> addFranchise(@RequestBody Franchise franchise){
+        Franchise returnFranchise = franchiseRepository.save(franchise);
         HttpStatus status = HttpStatus.CREATED;
-        return new ResponseEntity<>(returnAuthor, status);
+        return new ResponseEntity<>(returnFranchise, status);
     }
 
     @PutMapping("/{id}")
