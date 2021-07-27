@@ -62,4 +62,18 @@ public class FranchiseController {
         status = HttpStatus.NO_CONTENT;
         return new ResponseEntity<>(returnFranchise, status);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Franchise> deleteFranchise(@PathVariable int id) {
+        HttpStatus status = null;
+        if (franchiseRepository.existsById(id)) {
+            status = HttpStatus.OK;
+            Franchise franchise = franchiseRepository.getById(id);
+            franchiseRepository.deleteById(id);
+        } else {
+            status = HttpStatus.NO_CONTENT;
+        }
+        return new ResponseEntity<>(status);
+    }
+
 }

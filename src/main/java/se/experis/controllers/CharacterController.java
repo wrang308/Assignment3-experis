@@ -62,6 +62,18 @@ public class CharacterController {
         return new ResponseEntity<>(returnCharacter, status);
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Character> deleteCharacter(@PathVariable int id) {
+
+        HttpStatus status = null;
+        if (characterRepository.existsById(id)) {
+            status = HttpStatus.OK;
+            characterRepository.deleteById(id);
+        } else {
+            status = HttpStatus.NO_CONTENT;
+        }
+        return new ResponseEntity<>(status);
+    }
 
 
 }
