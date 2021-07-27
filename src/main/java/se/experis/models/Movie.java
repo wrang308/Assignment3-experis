@@ -15,8 +15,6 @@ public class Movie {
     private String movieTitle;
     @Column(name = "genre")
     private String genre;
-    @Column(name = "postal_code")
-    private String postalCode;
     @Column(name = "director")
     private String director;
     @Column(name = "picture")
@@ -28,10 +26,10 @@ public class Movie {
     @JoinColumn(name = "movie_id")
     public Franchise franchise;
 
-    @JsonGetter("franchises")
+    @JsonGetter("franchise")
     public String franchise() {
         if(franchise != null){
-            return "/api/v1/franchise/" + franchise.getId();
+            return "/api/v1/franchises/" + franchise.getId();
         }else{
             return null;
         }
@@ -77,14 +75,6 @@ public class Movie {
 
     public void setGenre(String genre) {
         this.genre = genre;
-    }
-
-    public String getPostalCode() {
-        return postalCode;
-    }
-
-    public void setPostalCode(String postalCode) {
-        this.postalCode = postalCode;
     }
 
     public String getDirector() {

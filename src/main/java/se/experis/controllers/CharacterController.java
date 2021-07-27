@@ -24,7 +24,7 @@ public class CharacterController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Character> getCharacter(@PathVariable int id){
+    public ResponseEntity<Character> getCharacter(@PathVariable Long id){
         Character returnCharacter = new Character();
         HttpStatus status;
         // We first check if the character exists, this saves some computing time.
@@ -45,7 +45,7 @@ public class CharacterController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Character> updateCharacter(@PathVariable int id, @RequestBody Character character){
+    public ResponseEntity<Character> updateCharacter(@PathVariable Long id, @RequestBody Character character){
         Character returnCharacter = new Character();
         HttpStatus status;
         /*
@@ -63,7 +63,7 @@ public class CharacterController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Character> deleteCharacter(@PathVariable int id) {
+    public ResponseEntity<Character> deleteCharacter(@PathVariable Long id) {
 
         HttpStatus status = null;
         if (characterRepository.existsById(id)) {

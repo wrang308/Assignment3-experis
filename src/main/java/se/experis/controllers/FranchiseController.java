@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "*")
-@RequestMapping("/api/v1/franchise")
+@RequestMapping("/api/v1/franchises")
 public class FranchiseController {
     @Autowired
     private FranchiseRepository franchiseRepository;
@@ -25,7 +25,7 @@ public class FranchiseController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Franchise> getFranchise(@PathVariable int id){
+    public ResponseEntity<Franchise> getFranchise(@PathVariable Long id){
         Franchise returnFranchise = new Franchise();
         HttpStatus status;
         // We first check if the author exists, this saves some computing time.
@@ -46,7 +46,7 @@ public class FranchiseController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Franchise> updateCharacter(@PathVariable int id, @RequestBody Franchise franchise){
+    public ResponseEntity<Franchise> updateCharacter(@PathVariable Long id, @RequestBody Franchise franchise){
         Franchise returnFranchise = new Franchise();
         HttpStatus status;
         /*
@@ -64,8 +64,9 @@ public class FranchiseController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Franchise> deleteFranchise(@PathVariable int id) {
+    public ResponseEntity<Franchise> deleteFranchise(@PathVariable Long id) {
         HttpStatus status = null;
+       // System.out.println("id:"+id);
         if (franchiseRepository.existsById(id)) {
             status = HttpStatus.OK;
             Franchise franchise = franchiseRepository.getById(id);

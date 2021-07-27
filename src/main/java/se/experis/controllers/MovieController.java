@@ -11,7 +11,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "*")
-@RequestMapping("/api/v1/movie")
+@RequestMapping("/api/v1/movies")
 public class MovieController {
 
     @Autowired
@@ -25,7 +25,7 @@ public class MovieController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Movie> getMovie(@PathVariable int id){
+    public ResponseEntity<Movie> getMovie(@PathVariable Long id){
         Movie returnMovie = new Movie();
         HttpStatus status;
         // We first check if the movie exists, this saves some computing time.
@@ -46,7 +46,7 @@ public class MovieController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Movie> updateCharacter(@PathVariable int id, @RequestBody Movie movie){
+    public ResponseEntity<Movie> updateCharacter(@PathVariable Long id, @RequestBody Movie movie){
         Movie returnMovie = new Movie();
         HttpStatus status;
         /*
@@ -64,9 +64,10 @@ public class MovieController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Movie> deleteMovie(@PathVariable int id) {
+    public ResponseEntity<Movie> deleteMovie(@PathVariable Long id) {
         HttpStatus status = null;
-        if (movieRepository.existsById(id)) {
+        System.out.println("id:"+id);
+        if (movieRepository.getById(id) != null) {
             status = HttpStatus.OK;
             movieRepository.deleteById(id);
         } else {
