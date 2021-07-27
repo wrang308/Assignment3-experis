@@ -15,15 +15,17 @@ public class Movie {
     private String movieTitle;
     @Column(name = "genre")
     private String genre;
+    @Column(name = "release_year")
+    private int releaseYear;
     @Column(name = "director")
     private String director;
-    @Column(name = "picture")
+    @Column(name = "picture_url")
     private String pictureURL;
-    @Column(name = "trailer")
+    @Column(name = "trailer_url")
     private String trailerURL;
 
     @ManyToOne
-    @JoinColumn(name = "movie_id")
+    @JoinColumn(name = "franchise_id")
     public Franchise franchise;
 
     @JsonGetter("franchise")
@@ -75,6 +77,14 @@ public class Movie {
 
     public void setGenre(String genre) {
         this.genre = genre;
+    }
+
+    public int getReleaseYear() {
+        return releaseYear;
+    }
+
+    public void setReleaseYear(int releaseYear) {
+        this.releaseYear = releaseYear;
     }
 
     public String getDirector() {

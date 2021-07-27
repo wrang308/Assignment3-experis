@@ -19,7 +19,7 @@ public class Character {
     private String alias;
     @Column(name = "gender")
     private String gender;
-    @Column(name = "picture")
+    @Column(name = "picture_url")
     private String pictureURL;
 
 
