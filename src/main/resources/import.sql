@@ -15,8 +15,8 @@ INSERT INTO movie ( director, genre, release_year, movie_title, picture_url, tra
 INSERT INTO "character" ( alias, full_name, gender, picture_url) VALUES ('Spider man', 'Peter parker', 'Male', 'https://www.imdb.com/title/tt0316654/mediaviewer/rm4263983360/');
 INSERT INTO "character" ( alias, full_name, gender, picture_url) VALUES ('', 'Mary Jane', 'Female', 'https://m.media-amazon.com/images/M/MV5BMjE3OTA5NDA5Nl5BMl5BanBnXkFtZTYwNDI3NzY3._V1_SX100_CR0,0,100,100_AL_.jpg');
 INSERT INTO "character" ( alias, full_name, gender, picture_url) VALUES ('New Goblin', 'Harry Osborn', 'Male', 'https://www.imdb.com/title/tt0413300/mediaviewer/rm2398654465/?ft0=name&fv0=nm0290556&ft1=image_type&fv1=still_frame');
-INSERT INTO "character" ( alias, full_name, gender, picture_url) VALUES ('', 'Hammond', 'Male', 'https://static.wikia.nocookie.net/jurassicpark/images/f/f8/JP-JohnHammond.jpg/revision/latest?cb=20080901014643');
-
+INSERT INTO "character" ( alias, full_name, gender, picture_url) VALUES ('', 'John Hammond', 'Male', 'https://static.wikia.nocookie.net/jurassicpark/images/f/f8/JP-JohnHammond.jpg/revision/latest?cb=20080901014643');
+INSERT INTO "character" ( alias, full_name, gender, picture_url) VALUES ('Doctor Octupus', 'Otto Octavius', 'Male', 'https://upload.wikimedia.org/wikipedia/en/b/bc/Dr._Octopus_Marvel.jpg');
 
 --movie_character
 INSERT INTO movie_character(character_id, movie_id) VALUES (1, 1);
@@ -29,3 +29,4 @@ INSERT INTO movie_character(character_id, movie_id) VALUES (3, 1);
 INSERT INTO movie_character(character_id, movie_id) VALUES (3, 2);
 INSERT INTO movie_character(character_id, movie_id) VALUES (3, 3);
 INSERT INTO movie_character(character_id, movie_id) VALUES (4, 4);
+INSERT INTO movie_character(character_id, movie_id) VALUES (5, 2);
