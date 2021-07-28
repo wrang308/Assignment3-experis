@@ -4,9 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import se.experis.models.Character;
 import se.experis.models.Movie;
 import se.experis.repositories.MovieRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -39,14 +41,14 @@ public class MovieController {
     }
 
     @PostMapping
-    public ResponseEntity<Movie> addCharacter(@RequestBody Movie movie){
+    public ResponseEntity<Movie> addMovie(@RequestBody Movie movie){
         Movie returnMovie = movieRepository.save(movie);
         HttpStatus status = HttpStatus.CREATED;
         return new ResponseEntity<>(returnMovie, status);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Movie> updateCharacter(@PathVariable Long id, @RequestBody Movie movie){
+    public ResponseEntity<Movie> updateMovie(@PathVariable Long id, @RequestBody Movie movie){
         Movie returnMovie = new Movie();
         HttpStatus status;
         /*
@@ -75,6 +77,25 @@ public class MovieController {
         }
         return new ResponseEntity<>(status);
     }
+
+    @GetMapping("/getAllCharactersInMovie/{id}")
+    public ResponseEntity<List<Character>> getAllCharactersInMovie(@PathVariable Long id) {
+        //List<Character> characterList = characterRepository.findAll();
+        List<Character> characterList = new ArrayList<>();
+        Movie movie = new Movie();
+        HttpStatus status = null;
+        if(movieRepository.existsById(id)) {
+            if(movie.getCharacters() != null) {
+                status = HttpStatus.OK;
+                movie = movieRepository.findById(id).get();
+                for(int i=0; i<movie.getCharacters().size(); i++) {
+                    characterList.add(movie.getCharacters().get(i));
+                }
+            }
+        }
+        return new ResponseEntity<>(characterList,status);
+    }
+
 
 
 }

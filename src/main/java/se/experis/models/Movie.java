@@ -111,6 +111,14 @@ public class Movie {
         this.trailerURL = trailer;
     }
 
+    public Franchise getFranchise() {
+        return franchise;
+    }
+
+    public List<Character> getCharacters() {
+        return characters;
+    }
+
 
 
 }
