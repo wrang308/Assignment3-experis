@@ -95,6 +95,36 @@ public class MovieService {
         return new ResponseEntity<>(characterList,status);
     }
 
+    public ResponseEntity<Movie> updateCharactersInMovie(Long id, Long[] characterIds){
+        Movie returnMovie = new Movie();
+        HttpStatus status;
+        /*
+         We want to check if the request body matches what we see in the path variable.
+         This is to ensure some level of security, making sure someone
+         hasn't done some malicious stuff to our body.
+        */
+        if(!movieRepository.existsById(id)){
+            status = HttpStatus.NOT_FOUND;
+            return new ResponseEntity<>(returnMovie,status);
+        }
+        returnMovie = movieRepository.findById(id).get();
+        movieRepository.findById(id).get().characters = new ArrayList<>();
+        for (int i = 0; i < characterIds.length; i++) {
+            if(characterRepository.existsById(characterIds[i])) {
+                returnMovie.characters.add(characterRepository.findById(characterIds[i]).get());
+
+            }else {
+                status = HttpStatus.NOT_FOUND;
+                return new ResponseEntity<>(returnMovie,status);
+            }
+        }
+        movieRepository.save(returnMovie);
+
+        status = HttpStatus.OK;
+        return new ResponseEntity<>(returnMovie, status);
+    }
+
+
 
 
 

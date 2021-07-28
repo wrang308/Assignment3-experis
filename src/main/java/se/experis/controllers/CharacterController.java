@@ -42,5 +42,4 @@ public class CharacterController {
         return characterService.deleteCharacter(id);
     }
 
-
 }

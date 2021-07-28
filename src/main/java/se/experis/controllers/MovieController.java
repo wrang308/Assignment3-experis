@@ -50,4 +50,9 @@ public class MovieController {
         return movieService.getAllCharactersInMovie(id);
     }
 
+    @PutMapping("/updateCharactersInMovie/{id}")
+    public ResponseEntity<Movie> getAllCharactersInFranchise(@PathVariable Long id, @RequestBody Long[] characterIds) {
+        return movieService.updateCharactersInMovie(id, characterIds);
+    }
+
 }
