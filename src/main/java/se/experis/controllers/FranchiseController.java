@@ -122,7 +122,7 @@ public class FranchiseController {
                     status = HttpStatus.OK;
                     for(int i = 0; i<moviesInFranchise.size(); i++) {
                         for(int j=0; j<moviesInFranchise.get(i).getCharacters().size(); j++) {
-                            if(!characterList.contains(moviesInFranchise.get(i).getCharacters().get(j).getId())) {
+                            if(!characterList.contains(moviesInFranchise.get(i).getCharacters().get(j))) {
                                 characterList.add(moviesInFranchise.get(i).getCharacters().get(j));
                             }
                         }
