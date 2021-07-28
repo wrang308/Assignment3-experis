@@ -9,6 +9,7 @@ import se.experis.models.Franchise;
 import se.experis.models.Movie;
 import se.experis.repositories.FranchiseRepository;
 import se.experis.repositories.MovieRepository;
+import se.experis.services.FranchiseService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,124 +19,41 @@ import java.util.List;
 @RequestMapping("/api/v1/franchises")
 public class FranchiseController {
     @Autowired
-    private FranchiseRepository franchiseRepository;
-
-    @Autowired
-    private MovieRepository movieRepository;
+    private FranchiseService franchiseService;
 
     @GetMapping()
     public ResponseEntity<List<Franchise>> getAllFranchises(){
-        List<Franchise> franchises = franchiseRepository.findAll();
-        HttpStatus status = HttpStatus.OK;
-        return new ResponseEntity<>(franchises,status);
+        return franchiseService.getAllFranchises();
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Franchise> getFranchise(@PathVariable Long id){
-        Franchise returnFranchise = new Franchise();
-        HttpStatus status;
-        // We first check if the author exists, this saves some computing time.
-        if(franchiseRepository.existsById(id)){
-            status = HttpStatus.OK;
-            returnFranchise = franchiseRepository.findById(id).get();
-        } else {
-            status = HttpStatus.NOT_FOUND;
-        }
-        return new ResponseEntity<>(returnFranchise, status);
+        return franchiseService.getFranchise(id);
     }
 
     @PostMapping
     public ResponseEntity<Franchise> addFranchise(@RequestBody Franchise franchise){
-        Franchise returnFranchise = franchiseRepository.save(franchise);
-        HttpStatus status = HttpStatus.CREATED;
-        return new ResponseEntity<>(returnFranchise, status);
+        return franchiseService.addFranchise(franchise);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Franchise> updateFranchise(@PathVariable Long id, @RequestBody Franchise franchise){
-        Franchise returnFranchise = new Franchise();
-        HttpStatus status;
-        /*
-         We want to check if the request body matches what we see in the path variable.
-         This is to ensure some level of security, making sure someone
-         hasn't done some malicious stuff to our body.
-        */
-        if(id != franchise.getId()){
-            status = HttpStatus.BAD_REQUEST;
-            return new ResponseEntity<>(returnFranchise,status);
-        }
-        returnFranchise = franchiseRepository.save(franchise);
-        status = HttpStatus.NO_CONTENT;
-        return new ResponseEntity<>(returnFranchise, status);
+        return franchiseService.updateFranchise(id,franchise);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Franchise> deleteFranchise(@PathVariable Long id) {
-        HttpStatus status = null;
-       // System.out.println("id:"+id);
-        if (franchiseRepository.existsById(id)) {
-            status = HttpStatus.OK;
-            Franchise franchise = franchiseRepository.getById(id);
-            franchiseRepository.deleteById(id);
-        } else {
-            status = HttpStatus.NO_CONTENT;
-        }
-        return new ResponseEntity<>(status);
+        return franchiseService.deleteFranchise(id);
     }
 
     @GetMapping("/getAllMoviesInFranchise/{id}")
     public ResponseEntity<List<Movie>> getAllMoviesInFranchise(@PathVariable Long id) {
-        List<Movie> movieList = new ArrayList<>();
-        HttpStatus status = null;
-        if(franchiseRepository.existsById(id)) {
-            if (movieRepository.findAll() != null) {
-                for (int i = 0; i < movieRepository.findAll().size(); i++) {
-                    if (movieRepository.findAll().get(i).getFranchise().getId() == id) {
-                        status = HttpStatus.OK;
-                        movieList.add(movieRepository.findAll().get(i));
-                    }
-                }
-            } else {
-                status = HttpStatus.NOT_FOUND;
-            }
-        }
-        else {
-            status = HttpStatus.NOT_FOUND;
-        }
-        return new ResponseEntity<>(movieList,status);
+        return franchiseService.getAllMoviesInFranchise(id);
     }
 
     @GetMapping("/getAllCharactersInFranchise/{movieId}")
-    public ResponseEntity<List<Character>> getAllCharactersInFranchise(@PathVariable Long movieId) {
-        List<Movie> moviesInFranchise = new ArrayList<>();
-        List<Character> characterList = new ArrayList<>();
-        HttpStatus status = null;
-        if (franchiseRepository.existsById(movieId)) {
-            if (movieRepository.findAll() != null) {
-
-                for (int i = 0; i < movieRepository.findAll().size(); i++) {
-                    if (movieRepository.findAll().get(i).getFranchise().getId() == movieId) {
-                        moviesInFranchise.add(movieRepository.findAll().get(i));
-                    }
-                }
-                if(moviesInFranchise.size() != 0) {
-                    status = HttpStatus.OK;
-                    for(int i = 0; i<moviesInFranchise.size(); i++) {
-                        for(int j=0; j<moviesInFranchise.get(i).getCharacters().size(); j++) {
-                            if(!characterList.contains(moviesInFranchise.get(i).getCharacters().get(j))) {
-                                characterList.add(moviesInFranchise.get(i).getCharacters().get(j));
-                            }
-                        }
-                    }
-                }
-                else{
-                    status = HttpStatus.NOT_FOUND;
-                }
-            }
-        }
-        return new ResponseEntity<>(characterList,status);
+    public ResponseEntity<List<Character>> getAllCharactersInFranchise(@PathVariable Long id) {
+        return franchiseService.getAllCharactersInFranchise(id);
     }
-
-
 
 }
