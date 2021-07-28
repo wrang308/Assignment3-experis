@@ -84,14 +84,12 @@ public class MovieController {
         List<Character> characterList = new ArrayList<>();
         Movie movie = new Movie();
         HttpStatus status = null;
-        if(movieRepository.existsById(id)) {
-            if(movie.getCharacters() != null) {
+        if(movieRepository.getById(id) != null) {
                 status = HttpStatus.OK;
                 movie = movieRepository.findById(id).get();
                 for(int i=0; i<movie.getCharacters().size(); i++) {
                     characterList.add(movie.getCharacters().get(i));
                 }
-            }
         }
         return new ResponseEntity<>(characterList,status);
     }
