@@ -56,4 +56,11 @@ public class FranchiseController {
         return franchiseService.getAllCharactersInFranchise(id);
     }
 
+    @PutMapping("/updateMoviesInFranchise/{franchiseId}")
+    public ResponseEntity<Franchise> updateMoviesInFranchise (@PathVariable long franchiseId, @RequestBody List<Long> movieIds){
+        return franchiseService.updateMoviesInFranchise(franchiseId, movieIds);
+    }
+
+
+
 }

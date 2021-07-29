@@ -57,4 +57,9 @@ public class Franchise {
         this.description = description;
     }
 
+    public void setMovies(List<Movie> movies) {
+        this.movies = movies;
+    }
+
+
 }

@@ -129,4 +129,30 @@ public class FranchiseService {
         return new ResponseEntity<>(characterList,status);
     }
 
+    public ResponseEntity<Franchise> updateMoviesInFranchise(long franchiseId, List<Long> movieIds) {
+        ArrayList<Movie> movieArrayList = new ArrayList<>();
+        Franchise franchise = new Franchise();
+        Movie movie = new Movie();
+        HttpStatus status = null;
+
+        if(franchiseRepository.existsById(franchiseId)) {
+            franchise = franchiseRepository.findById(franchiseId).get();
+            for(int i=0; i<movieIds.size(); i++) {
+
+                if(movieRepository.existsById(movieIds.get(i))) {
+                    movie = movieRepository.findById(movieIds.get(i)).get();
+                    movieArrayList.add(movie);
+                }
+                else {
+                    status = HttpStatus.NOT_FOUND;
+                    return new ResponseEntity<>(franchise, status);
+                }
+            }
+        }
+        status = HttpStatus.OK;
+        franchise.setMovies(movieArrayList);
+        franchiseRepository.save(franchise);
+        return new ResponseEntity<>(franchise, status);
+    }
+
 }
