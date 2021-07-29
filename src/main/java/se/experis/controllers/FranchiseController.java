@@ -36,9 +36,9 @@ public class FranchiseController {
         return franchiseService.addFranchise(franchise);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Franchise> updateFranchise(@PathVariable Long id, @RequestBody Franchise franchise){
-        return franchiseService.updateFranchise(id,franchise);
+    @PutMapping("/")
+    public ResponseEntity<Franchise> updateFranchise(@RequestBody Franchise franchise){
+        return franchiseService.updateFranchise(franchise);
     }
 
     @DeleteMapping("/{id}")
@@ -51,7 +51,7 @@ public class FranchiseController {
         return franchiseService.getAllMoviesInFranchise(id);
     }
 
-    @GetMapping("/getAllCharactersInFranchise/{movieId}")
+    @GetMapping("/getAllCharactersInFranchise/{id}")
     public ResponseEntity<List<Character>> getAllCharactersInFranchise(@PathVariable Long id) {
         return franchiseService.getAllCharactersInFranchise(id);
     }

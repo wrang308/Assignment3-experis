@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import se.experis.models.Character;
 import se.experis.repositories.CharacterRepository;
+import se.experis.repositories.MovieRepository;
 
 import java.util.List;
 
@@ -16,6 +17,9 @@ import java.util.List;
 public class CharacterService {
     @Autowired
     private CharacterRepository characterRepository;
+
+    @Autowired
+    private MovieRepository movieRepository;
 
     public ResponseEntity<List<Character>> getAllCharacters(){
         List<Character> characters = characterRepository.findAll();
@@ -42,7 +46,7 @@ public class CharacterService {
         return new ResponseEntity<>(returnCharacter, status);
     }
 
-    public ResponseEntity<Character> updateCharacter(Long id, Character character){
+    public ResponseEntity<Character> updateCharacter(Character character){
         Character returnCharacter = new Character();
         HttpStatus status;
         /*
@@ -50,7 +54,7 @@ public class CharacterService {
          This is to ensure some level of security, making sure someone
          hasn't done some malicious stuff to our body.
         */
-        if(id != character.getId()){
+        if(!characterRepository.existsById(character.getId())){
             status = HttpStatus.BAD_REQUEST;
             return new ResponseEntity<>(returnCharacter,status);
         }
@@ -59,13 +63,15 @@ public class CharacterService {
         return new ResponseEntity<>(returnCharacter, status);
     }
 
-    @DeleteMapping("/{id}")
     public ResponseEntity<Character> deleteCharacter(Long id) {
 
         HttpStatus status = null;
         if (characterRepository.existsById(id)) {
             status = HttpStatus.OK;
+
+            //characterRepository.delete(characterRepository.getById(id));
             characterRepository.deleteById(id);
+
         } else {
             status = HttpStatus.NO_CONTENT;
         }

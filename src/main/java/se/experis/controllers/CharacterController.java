@@ -32,9 +32,9 @@ public class CharacterController {
         return characterService.addCharacter(character);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Character> updateCharacter(@PathVariable Long id, @RequestBody Character character){
-        return characterService.updateCharacter(id, character);
+    @PutMapping("/")
+    public ResponseEntity<Character> updateCharacter( @RequestBody Character character){
+        return characterService.updateCharacter(character);
     }
 
     @DeleteMapping("/{id}")

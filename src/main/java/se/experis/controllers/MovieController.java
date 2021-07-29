@@ -35,9 +35,9 @@ public class MovieController {
        return movieService.addMovie(movie);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Movie> updateMovie(@PathVariable Long id, @RequestBody Movie movie){
-        return movieService.updateMovie(id,movie);
+    @PutMapping("/")
+    public ResponseEntity<Movie> updateMovie(@RequestBody Movie movie){
+        return movieService.updateMovie(movie);
     }
 
     @DeleteMapping("/{id}")
@@ -51,7 +51,7 @@ public class MovieController {
     }
 
     @PutMapping("/updateCharactersInMovie/{id}")
-    public ResponseEntity<Movie> getAllCharactersInFranchise(@PathVariable Long id, @RequestBody Long[] characterIds) {
+    public ResponseEntity<Movie> updateCharactersInMovie(@PathVariable Long id, @RequestBody Long[] characterIds) {
         return movieService.updateCharactersInMovie(id, characterIds);
     }
 

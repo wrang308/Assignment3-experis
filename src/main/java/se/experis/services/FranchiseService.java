@@ -48,7 +48,7 @@ public class FranchiseService {
         return new ResponseEntity<>(returnFranchise, status);
     }
 
-    public ResponseEntity<Franchise> updateFranchise(Long id, Franchise franchise){
+    public ResponseEntity<Franchise> updateFranchise(Franchise franchise){
         Franchise returnFranchise = new Franchise();
         HttpStatus status;
         /*
@@ -84,7 +84,7 @@ public class FranchiseService {
         if(franchiseRepository.existsById(id)) {
             if (movieRepository.findAll() != null) {
                 for (int i = 0; i < movieRepository.findAll().size(); i++) {
-                    if (movieRepository.findAll().get(i).getFranchise().getId() == id) {
+                    if (movieRepository.findAll().get(i).getFranchise() != null && movieRepository.findAll().get(i).getFranchise().getId() == id) {
                         status = HttpStatus.OK;
                         movieList.add(movieRepository.findAll().get(i));
                     }
@@ -107,7 +107,7 @@ public class FranchiseService {
             if (movieRepository.findAll() != null) {
 
                 for (int i = 0; i < movieRepository.findAll().size(); i++) {
-                    if (movieRepository.findAll().get(i).getFranchise().getId() == id) {
+                    if (movieRepository.findAll().get(i).getFranchise() != null && movieRepository.findAll().get(i).getFranchise().getId() == id) {
                         moviesInFranchise.add(movieRepository.findAll().get(i));
                     }
                 }
@@ -135,20 +135,25 @@ public class FranchiseService {
         Movie movie = new Movie();
         HttpStatus status = null;
 
-        if(franchiseRepository.existsById(franchiseId)) {
-            franchise = franchiseRepository.findById(franchiseId).get();
-            for(int i=0; i<movieIds.size(); i++) {
+        if(!franchiseRepository.existsById(franchiseId)) {
+            status = HttpStatus.NOT_FOUND;
+            return new ResponseEntity<>(franchise,status);
+        }
 
-                if(movieRepository.existsById(movieIds.get(i))) {
-                    movie = movieRepository.findById(movieIds.get(i)).get();
-                    movieArrayList.add(movie);
-                }
-                else {
-                    status = HttpStatus.NOT_FOUND;
-                    return new ResponseEntity<>(franchise, status);
-                }
+        franchise = franchiseRepository.findById(franchiseId).get();
+
+        for(int i = 0; i < movieIds.size(); i++) {
+            System.out.println("hej!:"+movieIds.get(i));
+            if(movieRepository.existsById(movieIds.get(i).longValue())) {
+                movie = movieRepository.findById(movieIds.get(i)).get();
+                movieArrayList.add(movie);
+            }
+            else {
+                status = HttpStatus.NOT_FOUND;
+                return new ResponseEntity<>(franchise, status);
             }
         }
+
         status = HttpStatus.OK;
         franchise.setMovies(movieArrayList);
         franchiseRepository.save(franchise);

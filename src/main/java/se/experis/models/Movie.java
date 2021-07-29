@@ -1,7 +1,9 @@
 package se.experis.models;
 import com.fasterxml.jackson.annotation.JsonGetter;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -37,7 +39,6 @@ public class Movie {
         }
     }
 
-    // Book entity
     @ManyToMany
     @JoinTable(
             name = "movie_character",
@@ -45,15 +46,16 @@ public class Movie {
             inverseJoinColumns = {@JoinColumn(name = "character_id")}
     )
     public List<Character> characters;
-
     @JsonGetter("characters")
     public List<String> characters() {
-        return characters.stream()
-                .map(character -> {
-                    return "/api/v1/characters/" + character.getId();
-                }).collect(Collectors.toList());
+        if(characters != null) {
+            return characters.stream()
+                    .map(character -> {
+                        return "/api/v1/characters/" + character.getId();
+                    }).collect(Collectors.toList());
+        }
+        return Collections.emptyList();
     }
-
 
     public Long getId() {
         return id;
@@ -118,7 +120,5 @@ public class Movie {
     public List<Character> getCharacters() {
         return characters;
     }
-
-
 
 }

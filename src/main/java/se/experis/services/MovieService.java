@@ -25,6 +25,7 @@ public class MovieService {
 
     @Autowired
     private FranchiseRepository franchiseRepository;
+    private Object Character;
 
     public ResponseEntity<List<Movie>> getAllMovies(){
         List<Movie> movies = movieRepository.findAll();
@@ -51,7 +52,7 @@ public class MovieService {
         return new ResponseEntity<>(returnMovie, status);
     }
 
-    public ResponseEntity<Movie> updateMovie(Long id, Movie movie){
+    public ResponseEntity<Movie> updateMovie(Movie movie){
         Movie returnMovie = new Movie();
         HttpStatus status;
         /*
@@ -59,7 +60,7 @@ public class MovieService {
          This is to ensure some level of security, making sure someone
          hasn't done some malicious stuff to our body.
         */
-        if(id != movie.getId()){
+        if(!movieRepository.existsById(movie.getId())){
             status = HttpStatus.BAD_REQUEST;
             return new ResponseEntity<>(returnMovie,status);
         }

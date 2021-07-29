@@ -1,6 +1,7 @@
 package se.experis.models;
 
 import com.fasterxml.jackson.annotation.*;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import java.util.List;
@@ -22,10 +23,16 @@ public class Character {
     @Column(name = "picture_url")
     private String pictureURL;
 
-
-    @ManyToMany(mappedBy = "characters")
+    @Nullable
+    @ManyToMany
+    @JoinTable(
+            name = "movie_character",
+            joinColumns = {@JoinColumn(name = "character_id")},
+            inverseJoinColumns = {@JoinColumn(name = "movie_id")}
+    )
     public List<Movie> movies;
 
+    @Nullable
     @JsonGetter("movies")
     public List<String> moviesGetter() {
         if(movies != null){
