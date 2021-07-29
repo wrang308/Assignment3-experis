@@ -56,8 +56,8 @@ public class FranchiseService {
          This is to ensure some level of security, making sure someone
          hasn't done some malicious stuff to our body.
         */
-        if(id != franchise.getId()){
-            status = HttpStatus.BAD_REQUEST;
+        if( !franchiseRepository.existsById(franchise.getId())){
+            status = HttpStatus.NOT_FOUND;
             return new ResponseEntity<>(returnFranchise,status);
         }
         returnFranchise = franchiseRepository.save(franchise);

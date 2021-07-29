@@ -98,11 +98,7 @@ public class MovieService {
     public ResponseEntity<Movie> updateCharactersInMovie(Long id, Long[] characterIds){
         Movie returnMovie = new Movie();
         HttpStatus status;
-        /*
-         We want to check if the request body matches what we see in the path variable.
-         This is to ensure some level of security, making sure someone
-         hasn't done some malicious stuff to our body.
-        */
+
         if(!movieRepository.existsById(id)){
             status = HttpStatus.NOT_FOUND;
             return new ResponseEntity<>(returnMovie,status);
@@ -123,9 +119,5 @@ public class MovieService {
         status = HttpStatus.OK;
         return new ResponseEntity<>(returnMovie, status);
     }
-
-
-
-
 
 }
