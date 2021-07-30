@@ -1,6 +1,6 @@
 package se.experis.models;
+
 import com.fasterxml.jackson.annotation.JsonGetter;
-import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import java.util.Collections;
@@ -32,12 +32,13 @@ public class Movie {
 
     @JsonGetter("franchise")
     public String franchise() {
-        if(franchise != null){
+        if (franchise != null) {
             return "/api/v1/franchises/" + franchise.getId();
-        }else{
+        } else {
             return null;
         }
     }
+
     // A movie can have many Characters. Characters can be in many Movies
     @ManyToMany
     @JoinTable(
@@ -46,9 +47,10 @@ public class Movie {
             inverseJoinColumns = {@JoinColumn(name = "character_id")}
     )
     public List<Character> characters;
+
     @JsonGetter("characters")
     public List<String> characters() {
-        if(characters != null) {
+        if (characters != null) {
             return characters.stream()
                     .map(character -> {
                         return "/api/v1/characters/" + character.getId();
