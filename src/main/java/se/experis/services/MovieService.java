@@ -27,12 +27,21 @@ public class MovieService {
     private FranchiseRepository franchiseRepository;
     private Object Character;
 
+    /**
+     * method to get all movies in the db
+     * @return a list of movies and status 200
+     */
     public ResponseEntity<List<Movie>> getAllMovies(){
         List<Movie> movies = movieRepository.findAll();
         HttpStatus status = HttpStatus.OK;
         return new ResponseEntity<>(movies,status);
     }
 
+    /**
+     * Method for getting a specific movie
+     * @param id of the wanted movie
+     * @return the wanted movie and http status if ok or not
+     */
     public ResponseEntity<Movie> getMovie(Long id){
         Movie returnMovie = new Movie();
         HttpStatus status;
@@ -46,12 +55,22 @@ public class MovieService {
         return new ResponseEntity<>(returnMovie, status);
     }
 
+    /**
+     * method for adding a movie to the db
+     * @param movie the movie to be added
+     * @return the added movie and http status if it was "created"/added
+     */
     public ResponseEntity<Movie> addMovie(Movie movie){
         Movie returnMovie = movieRepository.save(movie);
         HttpStatus status = HttpStatus.CREATED;
         return new ResponseEntity<>(returnMovie, status);
     }
 
+    /**
+     * method for updating a specific movie in the db
+     * @param movie the wanted movie to be updated
+     * @return the updated movie and http status if ok or not
+     */
     public ResponseEntity<Movie> updateMovie(Movie movie){
         Movie returnMovie = new Movie();
         HttpStatus status;
@@ -69,6 +88,11 @@ public class MovieService {
         return new ResponseEntity<>(returnMovie, status);
     }
 
+    /**
+     * method for deleting a movie from the db
+     * @param id of the movie to be deleted
+     * @return http status if ok or not
+     */
     public ResponseEntity<Movie> deleteMovie(Long id) {
         HttpStatus status = null;
         System.out.println("id:"+id);
@@ -81,6 +105,11 @@ public class MovieService {
         return new ResponseEntity<>(status);
     }
 
+    /**
+     * Method for returning all characters in a movie
+     * @param id of the movie
+     * @return list of characters in a specific movie and http status
+     */
     public ResponseEntity<List<Character>> getAllCharactersInMovie(Long id) {
         //List<Character> characterList = characterRepository.findAll();
         List<Character> characterList = new ArrayList<>();
@@ -96,6 +125,12 @@ public class MovieService {
         return new ResponseEntity<>(characterList,status);
     }
 
+    /**
+     * method for updating characters in a specific movie
+     * @param id of the specific movie
+     * @param characterIds id array of the characters
+     * @return returns the updated movie and http status
+     */
     public ResponseEntity<Movie> updateCharactersInMovie(Long id, Long[] characterIds){
         Movie returnMovie = new Movie();
         HttpStatus status;
