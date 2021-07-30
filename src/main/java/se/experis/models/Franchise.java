@@ -13,9 +13,9 @@ public class Franchise {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name")
+    @Column(name = "name", length = 100)
     private String name;
-    @Column(name = "description")
+    @Column(name = "description", length = 4000)
     private String description;
 
     @OneToMany
