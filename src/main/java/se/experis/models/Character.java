@@ -23,7 +23,7 @@ public class Character {
     @Column(name = "picture_url")
     private String pictureURL;
 
-    @Nullable
+    // Characters can be in many Movies. A movie can have many Characters.
     @ManyToMany
     @JoinTable(
             name = "movie_character",
@@ -32,7 +32,6 @@ public class Character {
     )
     public List<Movie> movies;
 
-    @Nullable
     @JsonGetter("movies")
     public List<String> moviesGetter() {
         if(movies != null){

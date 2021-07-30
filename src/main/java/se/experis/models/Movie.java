@@ -25,7 +25,7 @@ public class Movie {
     private String pictureURL;
     @Column(name = "trailer_url")
     private String trailerURL;
-
+    // A movie is only present in one Franchise. A Franchise can have many movies.
     @ManyToOne
     @JoinColumn(name = "franchise_id")
     public Franchise franchise;
@@ -38,7 +38,7 @@ public class Movie {
             return null;
         }
     }
-
+    // A movie can have many Characters. Characters can be in many Movies
     @ManyToMany
     @JoinTable(
             name = "movie_character",

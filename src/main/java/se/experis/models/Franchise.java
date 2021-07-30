@@ -17,7 +17,7 @@ public class Franchise {
     private String name;
     @Column(name = "description", length = 4000)
     private String description;
-
+    // One Franchise can have many movies. A movie is only present in one Franchise.
     @OneToMany
     @JoinColumn(name = "franchise_id")
     List<Movie> movies;
