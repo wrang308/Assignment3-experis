@@ -14,11 +14,11 @@ public class Character {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long characterId;
 
-    @Column(name = "full_name")
+    @Column(name = "full_name", length = 100)
     private String fullName;
-    @Column(name = "alias")
+    @Column(name = "alias", length = 100)
     private String alias;
-    @Column(name = "gender")
+    @Column(name = "gender", length = 20)
     private String gender;
     @Column(name = "picture_url")
     private String pictureURL;
